@@ -1,9 +1,9 @@
 [package]
 name = "gannot"
-description = """Gannot is a small library with limited functionality\
+description = """Gannot is a small library with limited functionality \
                 focused on genome annotation."""
 readme = "README.md"
-version = "0.0.1"
+version = "0.0.2"
 authors = ["Garth Ilsley"]
 license = "MIT OR Apache-2.0"
 rust-version = "1.83"
