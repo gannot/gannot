@@ -117,15 +117,22 @@ impl Bed6Row {
     }
 }
 
-/// A genomic range with an associated data value
+/// A genomic range with zero or more associated data values
 pub struct DataInterval<T: NumOps + Copy> {
     range: GenomicRange,
-    value: T,
+    values: Vec<Option<T>>,
 }
 
 impl<T: NumOps + Copy> DataInterval<T> {
-    pub fn value(&self) -> T {
-        self.value
+    pub fn new(range: GenomicRange, values: Vec<Option<T>>) -> DataInterval<T> {
+        DataInterval {
+            range,
+            values,
+        }
+    }
+
+    pub fn values(&self) -> &[Option<T>] {
+        &self.values
     }
 
     pub fn range(&self) -> &GenomicRange {
@@ -148,7 +155,28 @@ impl<T> From<BedGraphRow<T>> for DataInterval<T> where T: NumOps + Copy {
         let range = GenomicRange::from_0halfopen(row.chrom, row.chrom_start..row.chrom_end).unwrap();
         DataInterval {
             range,
-            value: row.data_value
+            values: vec![Some(row.data_value)]
+        }
+    }
+}
+
+/// BedGraph Extended, supporting zero or more values per row
+#[derive(Deserialize, Serialize)]
+pub struct BedGraphExtRow<T: NumOps + Copy> {
+    pub chrom: SeqId,
+    pub chrom_start: u64,
+    pub chrom_end: u64,
+    #[serde(flatten)]
+    pub data_values: Vec<Option<T>>,
+}
+
+impl<T> From<BedGraphExtRow<T>> for DataInterval<T> where T: NumOps + Copy {
+
+    fn from(row: BedGraphExtRow<T>) -> Self {
+        let range = GenomicRange::from_0halfopen(row.chrom, row.chrom_start..row.chrom_end).unwrap();
+        DataInterval {
+            range,
+            values: row.data_values
         }
     }
 }

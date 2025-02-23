@@ -1,9 +1,9 @@
 [package]
 name = "gannot"
-description = """Gannot is a small library with limited functionality \
+version = "0.1.0"
+description = """A small library with limited functionality \
                 focused on genome annotation."""
 readme = "README.md"
-version = "0.0.2"
 authors = ["Garth Ilsley"]
 license = "MIT OR Apache-2.0"
 rust-version = "1.83"
@@ -11,7 +11,7 @@ edition = "2021"
 repository = "https://github.com/gannot/gannot"
 
 [dependencies]
-thiserror = "2.0.9"
-serde = { version = "1.0.217", features = ["derive" ] }
-indexmap = { version = "2.7.0", features = ["serde"] }
-num-traits = "0.2.18"
+thiserror = "2.0.11"
+serde = { version = "1.0.218", features = ["derive" ] }
+indexmap = { version = "2.7.1", features = ["serde"] }
+num-traits = "0.2.19"
